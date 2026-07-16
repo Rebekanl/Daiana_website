@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cabin Crew Interview Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --cream: #f7f3ed;
+    --white: #ffffff;
+    --text: #1a2332;
+    --muted: #5a6a7a;
+    --section-bg: #f0ecf5;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--navy);
+    color: white;
+    text-align: center;
+    padding: 72px 32px 56px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.18) 0%, transparent 70%);
+  }
+  .hero-badge {
+    display: inline-block;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 6px 20px;
+    border-radius: 2px;
+    margin-bottom: 28px;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 6vw, 62px);
+    font-weight: 300;
+    letter-spacing: -1px;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .hero h1 span { color: var(--gold-light); }
+  .hero p {
+    color: rgba(255,255,255,0.6);
+    font-size: 15px;
+    max-width: 480px;
+    margin: 0 auto;
+    font-weight: 300;
+  }
+
+  /* LAYOUT */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 56px 24px 80px;
+  }
+
+  /* SECTION HEADER */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+    margin-top: 56px;
+  }
+  .section-header:first-child { margin-top: 0; }
+  .section-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+    min-width: 36px;
+  }
+  .section-title-wrap h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--navy);
+    letter-spacing: -0.3px;
+  }
+  .section-title-wrap p {
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+  .divider {
+    height: 1px;
+    background: linear-gradient(to right, var(--gold), transparent);
+    margin-bottom: 32px;
+  }
+
+  /* QUESTION CARD */
+  .q-card {
+    background: white;
+    border-radius: 4px;
+    border-left: 3px solid var(--gold);
+    margin-bottom: 28px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(10,22,40,0.06);
+    transition: box-shadow 0.2s;
+  }
+  .q-card:hover { box-shadow: 0 4px 20px rgba(10,22,40,0.12); }
+
+  .q-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 22px 24px 0;
+    cursor: pointer;
+  }
+  .q-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--gold);
+    font-weight: 600;
+    min-width: 28px;
+    padding-top: 1px;
+  }
+  .q-text {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--navy);
+    flex: 1;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eef0f3;
+  }
+  .q-card.open .q-text { border-bottom: none; padding-bottom: 0; }
+  .toggle-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.25s;
+    font-size: 14px;
+    color: var(--muted);
+  }
+  .q-card.open .toggle-icon {
+    background: var(--gold);
+    color: white;
+    transform: rotate(180deg);
+  }
+
+  .q-answer {
+    display: none;
+    padding: 20px 24px 22px 66px;
+  }
+  .q-card.open .q-answer { display: block; }
+
+  .answer-label {
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+  .answer-text {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.75;
+  }
+  .tip-box {
+    background: var(--cream);
+    border-radius: 3px;
+    padding: 12px 16px;
+    margin-top: 14px;
+    font-size: 13px;
+    color: #4a5568;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .tip-box .tip-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+
+  /* FOOTER */
+  .guide-footer {
+    text-align: center;
+    padding: 40px 24px;
+    background: var(--navy);
+    color: rgba(255,255,255,0.5);
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+  .guide-footer strong { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">Interview Preparation</div>
+  <h1>Cabin Crew<br><span>Interview Guide</span></h1>
+  <p>Model answers and strategic tips for every stage of the selection process</p>
+</div>
+
+<div class="container">
+
+  <!-- SECTION 1 -->
+  <div class="section-header">
+    <div class="section-num">01</div>
+    <div class="section-title-wrap">
+      <h2>Cabin Crew Questions</h2>
+      <p>Role-specific competencies</p>
+    </div>
+  </div>
+  <div class="divider"></div>
+
+  <div class="q-card" onclick="toggle(this)">
+    <div class="q-header">
+      <div class="q-num">1</div>
+      <div class="q-text">Why do you want to join our Airways company as a cabin crew member?</div>
+      <div class="toggle-icon">▼</div>
+    </div>
+    <div class="q-answer">
+      <div class="answer-label">Model Answer</div>
+      <div class="answer-text">I've always been passionate about delivering exceptional service and connecting with people from diverse backgrounds. This airline represents the gold standard in aviation, and I want to be part of a team that is genuinely committed to passenger safety and world-class hospitality. My background in customer service has given me the skills to stay composed under pressure and create memorable experiences — and I see this role as the perfect environment to grow and apply those abilities at the highest level.</div>
+      <div class="tip-box"><span class="tip-icon">💡</span> Mention something specific about the airline (awards, routes, values) to show genuine research and differentiate yourself from generic answers.</div>
+    </div>
+  </div>
+
+  <div class="q-card" onclick="toggle(this)">
+    <div class="q-header">
+      <div class="q-num">2</div>
+      <div class="q-text">This airline is renowned for its luxury service. How would you maintain these high standards onboard?</div>
+      <div class="toggle-icon">▼</div>
+    </div>
+    <div class="q-answer">
+      <div class="answer-label">Model Answer</div>
+      <div class="answer-text">I would uphold these standards by paying close attention to every detail — from a perfectly presented meal tray to proactively anticipating a passenger's needs before they have to ask. I believe luxury is not just about physical products but about how passengers feel: valued, respected, and cared for. I'd follow all brand guidelines meticulously and continuously look for small ways to personalise the experience for each individual passenger.</div>
+      <div class="tip-box"><span class="tip-icon">💡</span> Use a STAR example (Situation, Task, Action, Result) from a past service role where you went above the standard to delight a client.</div>
+    </div>
+  </div>
+
+  <div class="q-card" onclick="toggle(this)">
+    <div class="q-header">
+      <div class="q-num">3</div>
+      <div class="q-text">How would you calm a nervous or first-time flyer during the flight?</div>
+      <div class="toggle-icon">▼</div>
+    </div>
+    <div class="q-answer">
+      <div class="answer-label">Model Answer</div>
+      <div class="answer-text">I would approach the passenger calmly and empathetically, acknowledging their feelings without dismissing them. I'd offer reassurance with factual but simple information about turbulence or flight procedures, maintain a warm and confident demeanour, and check in on them throughout the flight. If appropriate, I'd suggest breathing techniques or offer them something comforting like a drink or a magazine to help distract and relax them.</div>
+      <div class="tip-box"><span class="tip-icon">💡</span> Interviewers want to see empathy + professionalism. Avoid being condescending — show genuine care.</div>
+    </div>
+  </div>
+
+  <div class="q-card" onclick="toggle(this)">
+    <div class="q-header">
+      <div class="q-num">4</div>
+      <div class="q-text">Describe a time when you went above and beyond for a customer. How did they react?</div>
+      <div class="toggle-icon">▼</div>
+    </div>
+    <div class="q-answer">
+      <div class="answer-label">Model Answer</div>
+      <div class="answer-text">Use a real example following the STAR method: describe the Situation (e.g. a guest at a hotel was distressed about a cancelled anniversary dinner), your Task, the Action you took (e.g. personally coordinating a surprise replacement experience), and the Result (customer's positive reaction, repeat business, compliment letter). End by connecting it to the airline role: "That experience reinforced my belief that small gestures create lasting impressions — which is exactly what I aim to do on every flight."</div>
+      <div class="tip-box"><span class="tip-icon">💡</span> Prepare 2–3 real stories in advance. The best answers are specific, human, and show initiative — not just "doing your job."</div>
+    </div>
+  </div>
+
+  <div class="q-card" onclick="toggle(this)">
+    <div class="q-header">
+      <div class="q-num">5</div>
+      <div class="q-text">What would you do if a passenger refused to comply with safety instructions during takeoff?</div>
+      <div class="toggle-icon">▼</div>
+    </div>
+    <div class="q-answer">
+      <div class="answer-label">Model Answer</div>
+      <div class="answer-text">Safety is non-negotiable. I would approach the passenger calmly, maintain eye contact, and clearly explain why the instruction is essential — not just a rule, but a matter of their own safety and others'. I'd give them a moment to comply. If they continued to refuse, I would notify the senior cabin crew member or purser and follow the airline's established escalation protocol. I would remain professional and non-confrontational throughout.</div>
+      <div class="tip-box"><span class="tip-icon">💡</span> Show you understand the hierarchy: your role → senior crew → captain. Never say you'd handle it alone if it escalates.</div>
+    </div>
+  </div>
+
+  <div class="q-card" onclick="toggle(this)">
+    <div class="q-header">
+      <div class="q-num">6</div>
+      <div class="q-text">How do you handle language or cultural barriers with passengers from all over the world?</div>
+      <div class="toggle-icon">▼</div>
+    </div>
+    <div class="q-answer">
+      <div class="answer-label">Model Answer</div>
+      <div class="answer-text">I stay calm, use simple and clear language, speak slowly, and rely on body language and gestures when verbal communication is limited. I would also make use of translation apps or seek a colleague who speaks the passenger's language. Culturally, I approach every interaction with openness and respect, avoiding assumptions. I've worked with diverse customers before and see cultural differences as an enriching part of the job rather than a barrier.</div>
+    </div>
+  </div>
+
+  <div class="q-card" onclick="toggle(this)">
+    <div class="q-header">
+      <div class="q-num">7</div>
+      <div class="q-text">How would you handle an irate passenger who is unhappy with their seating arrangement or meal?</div>
+      <div class="toggle-icon">▼</div>
+    </div>
+    <div class="q-answer">
+      <div class="answer-label">Model Answer</div>
+      <div class="answer-text">I would listen fully without interrupting, validate their frustration, and apologise sincerely for the inconvenience. Then I would focus on solutions within my authority — offering an alternative meal, adjusting what I can, or escalating seat issues to the senior crew. I would close the interaction by ensuring the passenger felt heard and taken care of. De-escalation through empathy is always my first tool.</div>
+      <div class="tip-box"><span class="tip-icon">💡</span> The L.A.S.T. method works well here: Listen, Apologise, Solve, Thank.</div>
+    </div>
+  </div>
+
+  <div class="q-card" onclick="toggle(this)">
+    <div class="q-header">
+      <div class="q-num">8</div>
+      <div class="q-text">Describe your approach to ensuring passenger safety and comfort on ultra-long-haul flights.</div>
+      <div class="toggle-icon">▼</div>
+    </div>
+    <div class="q-answer">
+      <div class="answer-label">Model Answer</div>
+      <div class="answer-text">On long-haul flights, proactive care matters even more. I would conduct regular cabin walks, check on passengers who seem uncomfortable or restless, offer hydration reminders, assist with sleep comfort items, and be attentive to medical needs. For safety, I'd stay vigilant throughout, never becoming complacent during quieter periods. I'd also pace my own energy to stay sharp for the full duration of the flight.</div>
+    </div>
+  </div>
+
+  <div class="q-card" onclick="toggle(this)">
+    <div class="q-header">
+      <div class="q-num">9</div>
+      <div class="q-text">What would you do if you noticed a fellow crew member failing to follow the airline's service standards?</div>
+      <div class="toggle-icon">▼</div>
+    </div>
+    <div class="q-answer">
+      <div class="answer-label">Model Answer</div>
+      <div class="answer-text">I believe in addressing issues professionally and discreetly. I would first check whether it was a misunderstanding or an oversight, and if appropriate, have a quiet, respectful word with my colleague. If the issue persisted or affected passenger safety, I would bring it to the attention of the senior crew member. I would never undermine a colleague publicly, but I also take the airline's standards seriously and wouldn't ignore a persistent problem.</div>
+      <div class="tip-box"><span class="tip-icon">💡</span> This tests your integrity and teamwork. Show you value both standards and colleague relationships.</div>
+    </div>
+  </div>
+
+  <div class="q-card" onclick="toggle(this)">
+    <div class="q-header">
+      <div class="q-num">10</div>
+      <div class="q-text">How do you stay motivated and maintain professionalism during long shifts?</div>
+      <div class="toggle-icon">▼</div>
+    </div>
+    <div class="q-answer">
+      <div class="answer-label">Model Answer</div>
+      <div class="answer-text">I remind myself that every passenger's journey is significant to them, even if it's routine for me. That mindset keeps me present and engaged. Practically, I manage my energy with proper rest before flights, good nutrition, and clear task focus. I also draw motivation from my team — working alongside great colleagues makes even the most demanding shifts rewarding. Professionalism, to me, is a standard I hold regardless of how I feel in a given moment.</div>
+    </div>
+  </div>
+
+  <!-- SECTION 2 -->
+  <div class="section-header">
+    <div class="section-num">02</div>
+    <div class="section-title-wrap">
+      <h2>General HR Questions</h2>
+      <p>Character & behavioural competencies</p>
+    </div>
+  </div>
+  <div class="divider"></div>
+
+  <div class="q-card" onclick="toggle(this)">
+    <div class="q-header">
+      <div class="q-num">1</div>
+      <div class="q-text">Tell us about yourself.</div>
+      <div class="toggle-icon">▼</div>
+    </div>
+    <div class="q-answer">
+      <div class="answer-label">Model Answer</div>
+      <div class="answer-text">Structure: Present → Past → Future. "I'm currently [role], where I've developed strong skills in customer service and working under pressure. Before that, I [relevant background]. I speak [languages], I've lived/worked in [places], and I've always been drawn to environments that are dynamic and people-focused. What excites me most about this opportunity is [specific reason related to the airline]. My goal is to build a long-term career in aviation where I can grow and make a real impact."</div>
+      <div class="tip-box"><span class="tip-icon">💡</span> Keep it to 90 seconds. Focus on what's relevant to the role. End with why you're here.</div>
+    </div>
+  </div>
+
+  <div class="q-card" onclick="toggle(this)">
+    <div class="q-header">
+      <div class="q-num">2</div>
+      <div class="q-text">Why do you want to work for our Airways company?</div>
+      <div class="toggle-icon">▼</div>
+    </div>
+    <div class="q-answer">
+      <div class="answer-label">Model Answer</div>
+      <div class="answer-text">Research the airline thoroughly before your interview. Mention specific achievements (awards won, routes, reputation, innovation in service). Example: "Your airline consistently ranks among the world's best for in-flight experience, and I admire the investment you make in crew training and development. I want to represent a brand I'm genuinely proud of, and I see this airline as a place where I can grow while delivering the best service of my career."</div>
+    </div>
+  </div>
+
+  <div class="q-card" onclick="toggle(this)">
+    <div class="q-header">
+      <div class="q-num">3</div>
+      <div class="q-text">What do you know about our airline's history, mission, and values?</div>
+      <div class="toggle-icon">▼</div>
+    </div>
+    <div class="q-answer">
+      <div class="answer-label">Model Answer</div>
+      <div class="answer-text">Research before the interview: founding year, hub city, fleet size, destinations, awards (Skytrax, etc.), stated mission and values. Show you understand what makes this airline unique. Example structure: "Founded in [year], the airline has grown to serve over [X] destinations and has been recognised for [specific award]. Your mission around [e.g., connecting the world with luxury and care] resonates strongly with me because..."</div>
+      <div class="tip-box"><span class="tip-icon">💡</span> This question rewards preparation. Candidates who know the airline deeply stand out immediately.</div>
+    </div>
+  </div>
+
+  <div class="q-card" onclick="toggle(this)">
+    <div class="q-header">
+      <div class="q-num">4</div>
+      <div class="q-text">What are your greatest strengths and weaknesses, and how would they impact your role?</div>
+      <div class="toggle-icon">▼</div>
+    </div>
+    <div class="q-answer">
+      <div class="answer-label">Model Answer</div>
+      <div class="answer-text"><strong>Strength:</strong> Choose one directly relevant to the role (e.g. composure under pressure, communication, empathy) and give a real example. <strong>Weakness:</strong> Choose something genuine but not disqualifying, and always show what you're actively doing to improve it. Example: "I used to find it hard to delegate, but I've been intentionally practising trusting my team more — and I've seen better outcomes as a result."</div>
+      <div class="tip-box"><span class="tip-icon">💡</span> Never say "I'm a perfectionist." It's overused and unconvincing. Be honest and show self-awareness.</div>
+    </div>
+  </div>
+
+  <div class="q-card" onclick="toggle(this)">
+    <div class="q-header">
+      <div class="q-num">5</div>
+      <div class="q-text">Share a time when you faced a challenging situation at work and how you resolved it.</div>
+      <div class="toggle-icon">▼</div>
+    </div>
+    <div class="q-answer">
+      <div class="answer-label">Model Answer</div>
+      <div class="answer-text">Use the STAR method. Choose a story that demonstrates problem-solving, resilience, and a positive outcome. Ideally, it should involve people or service, not just a technical task. End with what you learned: "Looking back, that situation taught me that staying calm and communicating clearly can defuse almost any crisis."</div>
+    </div>
+  </div>
+
+  <div class="q-card" onclick="toggle(this)">
+    <div class="q-header">
+      <div class="q-num">6</div>
+      <div class="q-text">How do you handle working in a multicultural and diverse environment?</div>
+      <div class="toggle-icon">▼</div>
+    </div>
+    <div class="q-answer">
+      <div class="answer-label">Model Answer</div>
+      <div class="answer-text">I genuinely thrive in diverse environments. I approach every interaction with curiosity and respect, learning from colleagues' different perspectives and adapting my communication style to the person in front of me. I've worked with people from [X nationalities] in my current role, and I've found that diversity makes a team stronger and more creative. I'm also committed to continuous learning about different cultures and etiquettes.</div>
+    </div>
+  </div>
+
+  <div class="q-card" onclick="toggle(this)">
+    <div class="q-header">
+      <div class="q-num">7</div>
+      <div class="q-text">Where do you see yourself in five years, and how can the airline help you achieve those goals?</div>
+      <div class="toggle-icon">▼</div>
+    </div>
+    <div class="q-answer">
+      <div class="answer-label">Model Answer</div>
+      <div class="answer-text">"In five years, I see myself as a senior or lead cabin crew member, potentially mentoring newer colleagues and contributing to service excellence. I'm drawn to this airline specifically because of the structured career progression and the investment in crew development — I believe the training and international exposure here would accelerate my growth in a way few other environments could."</div>
+      <div class="tip-box"><span class="tip-icon">💡</span> Show ambition within the company — not ambition to leave it.</div>
+    </div>
+  </div>
+
+  <div class="q-card" onclick="toggle(this)">
+    <div class="q-header">
+      <div class="q-num">8</div>
+      <div class="q-text">How do you handle stress and tight deadlines in a high-pressure environment?</div>
+      <div class="toggle-icon">▼</div>
+    </div>
+    <div class="q-answer">
+      <div class="answer-label">Model Answer</div>
+      <div class="answer-text">I manage stress by staying organised, prioritising clearly, and keeping a calm, solutions-focused mindset. When I feel pressure building, I focus on what I can control and communicate proactively with my team. I've worked in high-volume hospitality roles during peak season and I've learned that preparation before a shift — and trusting your training during it — is the best stress management tool there is.</div>
+    </div>
+  </div>
+
+  <div class="q-card" onclick="toggle(this)">
+    <div class="q-header">
+      <div class="q-num">9</div>
+      <div class="q-text">What does excellent customer service mean to you, and how would you deliver it?</div>
+      <div class="toggle-icon">▼</div>
+    </div>
+    <div class="q-answer">
+      <div class="answer-label">Model Answer</div>
+      <div class="answer-text">Excellent customer service means making every person feel genuinely seen and cared for — not processed. It's the difference between meeting expectations and exceeding them. I deliver it by being present, attentive, and proactive: noticing when someone might need something before they ask, personalising small touches wherever possible, and always following through on what I say I'll do. The goal is to ensure every passenger steps off the plane feeling that their journey was special.</div>
+    </div>
+  </div>
+
+  <!-- SECTION 3 -->
+  <div class="section-header">
+    <div class="section-num">03</div>
+    <div class="section-title-wrap">
+      <h2>Airline-Specific Questions</h2>
+      <p>Brand alignment & company knowledge</p>
+    </div>
+  </div>
+  <div class="divider"></div>
+
+  <div class="q-card" onclick="toggle(this)">
+    <div class="q-header">
+      <div class="q-num">1</div>
+      <div class="q-text">Why did you choose our Airways company over other airlines?</div>
+      <div class="toggle-icon">▼</div>
+    </div>
+    <div class="q-answer">
+      <div class="answer-label">Model Answer</div>
+      <div class="answer-text">Be specific. Generic praise ("because you're the best") is unconvincing. Mention specific differentiators: their training programme, crew welfare, routes, cabin product, reputation for innovation, commitment to service excellence. Example: "I've followed your airline's development for years — the investment in crew wellbeing and the reputation for being genuinely passenger-first aligns with my own values. I want to represent a brand I believe in."</div>
+    </div>
+  </div>
+
+  <div class="q-card" onclick="toggle(this)">
+    <div class="q-header">
+      <div class="q-num">2</div>
+      <div class="q-text">Our airline operates in a multicultural environment. How would you adapt to working with colleagues from different backgrounds?</div>
+      <div class="toggle-icon">▼</div>
+    </div>
+    <div class="q-answer">
+      <div class="answer-label">Model Answer</div>
+      <div class="answer-text">I adapt naturally to different communication styles and cultural contexts. I start every professional relationship with genuine curiosity — I want to understand how someone prefers to work, not assume it. I've found that a shared focus on the team's goal always bridges cultural differences. And when miscommunications arise, I address them directly and respectfully before they grow.</div>
+    </div>
+  </div>
+
+  <div class="q-card" onclick="toggle(this)">
+    <div class="q-header">
+      <div class="q-num">3</div>
+      <div class="q-text">What do you think is our airline's biggest strength in the global aviation market?</div>
+      <div class="toggle-icon">▼</div>
+    </div>
+    <div class="q-answer">
+      <div class="answer-label">Model Answer</div>
+      <div class="answer-text">Research the airline's positioning. Common strong angles: strategic hub location, product innovation (e.g. lie-flat beds, onboard bar, entertainment system), investment in crew training, global reach, or brand consistency. Example: "I believe your biggest strength is the consistent delivery of luxury at scale — you've managed to personalise service across millions of passengers, which is genuinely rare in this industry."</div>
+    </div>
+  </div>
+
+  <div class="q-card" onclick="toggle(this)">
+    <div class="q-header">
+      <div class="q-num">4</div>
+      <div class="q-text">Our airline emphasises innovation. How would you embody this in your work?</div>
+      <div class="toggle-icon">▼</div>
+    </div>
+    <div class="q-answer">
+      <div class="answer-label">Model Answer</div>
+      <div class="answer-text">Innovation for a cabin crew member isn't about technology — it's about finding better ways to serve. I embody innovation by constantly observing passenger needs and proposing improvements to my team, staying up to date with service trends in hospitality, and approaching every situation with a "how can I do this better?" mindset. I'd also embrace any new tools or training the airline introduces with enthusiasm rather than resistance.</div>
+    </div>
+  </div>
+
+  <div class="q-card" onclick="toggle(this)">
+    <div class="q-header">
+      <div class="q-num">5</div>
+      <div class="q-text">How do you see yourself growing within the airline in the next few years?</div>
+      <div class="toggle-icon">▼</div>
+    </div>
+    <div class="q-answer">
+      <div class="answer-label">Model Answer</div>
+      <div class="answer-text">I see a clear path from cabin crew to senior crew, and eventually to a leadership or training role. I want to develop deep expertise in service delivery and safety, and contribute beyond my own flights by helping develop new colleagues. I'm also interested in [any specific area — e.g. first class service, long-haul operations] and hope to specialise over time. The airline's development programmes seem like an ideal environment to make that progress.</div>
+    </div>
+  </div>
+
+  <!-- SECTION 4 -->
+  <div class="section-header">
+    <div class="section-num">04</div>
+    <div class="section-title-wrap">
+      <h2>Situational & Problem-Solving</h2>
+      <p>Handling real in-flight scenarios</p>
+    </div>
+  </div>
+  <div class="divider"></div>
+
+  <div class="q-card" onclick="toggle(this)">
+    <div class="q-header">
+      <div class="q-num">1</div>
+      <div class="q-text">A passenger's in-flight entertainment system is not working and they are frustrated. How would you resolve this?</div>
+      <div class="toggle-icon">▼</div>
+    </div>
+    <div class="q-answer">
+      <div class="answer-label">Model Answer</div>
+      <div class="answer-text">I would acknowledge the frustration immediately with a genuine apology, attempt a quick technical reset, and if unsuccessful, offer alternatives: move them to another seat if available, offer a tablet or reading materials, and compensate where possible (extra amenities, complimentary drink). I'd follow up with the passenger later to ensure they're comfortable and note the technical issue for the maintenance report.</div>
+    </div>
+  </div>
+
+  <div class="q-card" onclick="toggle(this)">
+    <div class="q-header">
+      <div class="q-num">2</div>
+      <div class="q-text">If a child travelling alone becomes upset during the flight, how would you comfort them?</div>
+      <div class="toggle-icon">▼</div>
+    </div>
+    <div class="q-answer">
+      <div class="answer-label">Model Answer</div>
+      <div class="answer-text">I would crouch down to their eye level, speak calmly and warmly, and try to understand what's wrong. I'd offer comfort items (blanket, stuffed toy if available), engage them in a game or activity, and reassure them that we'll be arriving soon. I'd also check the unaccompanied minor documentation for any specific guidance from the parents, and keep attentive check-ins throughout the flight.</div>
+    </div>
+  </div>
+
+  <div class="q-card" onclick="toggle(this)">
+    <div class="q-header">
+      <div class="q-num">3</div>
+      <div class="q-text">A passenger demands an upgrade that cannot be accommodated. How do you manage their expectations?</div>
+      <div class="toggle-icon">▼</div>
+    </div>
+    <div class="q-answer">
+      <div class="answer-label">Model Answer</div>
+      <div class="answer-text">I would listen respectfully, explain clearly and without apology that upgrades are subject to availability and airline policy, and genuinely apologise that I'm unable to accommodate the request on this occasion. I would then look for something I can do — a premium snack, priority attention, noting their preference for a future upgrade request. I would close the conversation positively, so they don't feel dismissed.</div>
+      <div class="tip-box"><span class="tip-icon">💡</span> The key is acknowledging the request seriously while being clear and unapologetic about what isn't possible — firmness with warmth.</div>
+    </div>
+  </div>
+
+  <div class="q-card" onclick="toggle(this)">
+    <div class="q-header">
+      <div class="q-num">4</div>
+      <div class="q-text">During a flight delay, passengers become restless. How would you handle the situation?</div>
+      <div class="toggle-icon">▼</div>
+    </div>
+    <div class="q-answer">
+      <div class="answer-label">Model Answer</div>
+      <div class="answer-text">Communication is key in these moments. I would keep passengers informed with updates as frequently as possible, even if the update is "we're still waiting for more information." I'd offer refreshments, engage with passengers who seem particularly anxious, and maintain a calm, positive presence on the cabin floor. Passengers are far more patient when they feel informed and cared for, rather than ignored.</div>
+    </div>
+  </div>
+
+  <div class="q-card" onclick="toggle(this)">
+    <div class="q-header">
+      <div class="q-num">5</div>
+      <div class="q-text">What would you do if a passenger reports feeling unwell, but there is no doctor onboard?</div>
+      <div class="toggle-icon">▼</div>
+    </div>
+    <div class="q-answer">
+      <div class="answer-label">Model Answer</div>
+      <div class="answer-text">I would immediately notify the senior cabin crew and follow the airline's medical emergency protocol. I'd assess the passenger's condition, use the onboard first aid kit as trained, and request over the intercom whether there is a medical professional onboard. The captain would be informed and a ground medical team could be contacted via radio for guidance. I would stay calm, keep the passenger comfortable, and document everything clearly.</div>
+      <div class="tip-box"><span class="tip-icon">💡</span> Emphasise protocol knowledge and composure. Interviewers want to know you won't panic.</div>
+    </div>
+  </div>
+
+  <div class="q-card" onclick="toggle(this)">
+    <div class="q-header">
+      <div class="q-num">6</div>
+      <div class="q-text">If two passengers are involved in a heated argument during the flight, how would you manage it?</div>
+      <div class="toggle-icon">▼</div>
+    </div>
+    <div class="q-answer">
+      <div class="answer-label">Model Answer</div>
+      <div class="answer-text">I would intervene calmly and assertively, physically positioning myself between the passengers if needed. I'd address each person individually, acknowledge their frustration, and separate them — asking one to come with me to a different area of the cabin. I'd notify the senior crew immediately and document the incident. If either passenger poses a safety risk, the captain would be informed per protocol. My goal is de-escalation before it becomes a security matter.</div>
+    </div>
+  </div>
+
+  <div class="q-card" onclick="toggle(this)">
+    <div class="q-header">
+      <div class="q-num">7</div>
+      <div class="q-text">What actions would you take if a passenger was caught smoking in the lavatory during the flight?</div>
+      <div class="toggle-icon">▼</div>
+    </div>
+    <div class="q-answer">
+      <div class="answer-label">Model Answer</div>
+      <div class="answer-text">Smoking onboard is a serious safety violation. I would address the passenger firmly and professionally, make clear that this is prohibited by law and endangers everyone onboard, and ensure the area is safe. I would immediately notify the senior crew member and the captain, and document the incident fully. Depending on airline policy and the severity, the captain may choose to involve authorities upon landing.</div>
+    </div>
+  </div>
+
+  <div class="q-card" onclick="toggle(this)">
+    <div class="q-header">
+      <div class="q-num">8</div>
+      <div class="q-text">Describe your approach if a passenger with a disability requires assistance that you are unfamiliar with.</div>
+      <div class="toggle-icon">▼</div>
+    </div>
+    <div class="q-answer">
+      <div class="answer-label">Model Answer</div>
+      <div class="answer-text">The most important thing is to ask the passenger directly and respectfully how they prefer to be assisted — they are the expert in their own needs. I would never assume or impose. I'd also consult the airline's special assistance guidelines and involve a colleague with more specific training if needed. My priority is to ensure the passenger feels respected, comfortable, and fully supported throughout the flight.</div>
+      <div class="tip-box"><span class="tip-icon">💡</span> "Ask, don't assume" is the golden rule for disability assistance. It shows respect and professionalism.</div>
+    </div>
+  </div>
+
+  <div class="q-card" onclick="toggle(this)">
+    <div class="q-header">
+      <div class="q-num">9</div>
+      <div class="q-text">How would you manage a situation where a VIP passenger has specific requests that conflict with standard procedures?</div>
+      <div class="toggle-icon">▼</div>
+    </div>
+    <div class="q-answer">
+      <div class="answer-label">Model Answer</div>
+      <div class="answer-text">I would listen carefully to the request and assess whether it genuinely conflicts with procedure or if there's a creative solution within my authority. I'd communicate respectfully that while I want to do everything possible to meet their needs, certain procedures exist for safety and fairness reasons that cannot be bypassed. I would escalate to the senior crew for guidance on what accommodations are within policy. VIP treatment is about exceptional attention — not about ignoring rules.</div>
+    </div>
+  </div>
+
+  <div class="q-card" onclick="toggle(this)">
+    <div class="q-header">
+      <div class="q-num">10</div>
+      <div class="q-text">What steps would you take to ensure passengers feel reassured during unexpected turbulence?</div>
+      <div class="toggle-icon">▼</div>
+    </div>
+    <div class="q-answer">
+      <div class="answer-label">Model Answer</div>
+      <div class="answer-text">I would immediately follow crew safety procedures — securing the cabin and returning to my seat as instructed. I'd make eye contact with nervous-looking passengers, offer a calm nod or reassuring expression, and once cleared to move, check on those who appeared distressed. After the turbulence passes, I would resume service, acknowledge the experience with a light and reassuring comment, and check in on passengers who had visible anxiety. A calm crew is the most powerful reassurance tool there is.</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="guide-footer">
+  <strong>Cabin Crew Interview Preparation Guide</strong> &nbsp;·&nbsp; Prepare with purpose. Serve with excellence.
+</div>
+
+<script>
+  function toggle(card) {
+    card.classList.toggle('open');
+  }
+</script>
+
+</body>
+</html>
